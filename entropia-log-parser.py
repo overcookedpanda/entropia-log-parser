@@ -1,25 +1,43 @@
 #!/usr/bin/env python3
 import re
 
-# Skill Gain:
-sampleData = '2019-06-08 22:38:31 [System] [] You have gained 1.1731 experience in your Scourging skill'
-skillGains = re.findall(
-    r'([0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[1-2][0-9]|3[0-1]) (?:2[0-3]|[01][0-9]):[0-5][0-9]:[0-6][0-9])(?: \['
-    r'System\] \[\] )(?:.*gained )(\d.*.\d\d\d\d)(?: .*your )(.*)(?:skill)',
-    sampleData)
+# Skill Gains:
+def getSkillGains(data):
+    skillGains = re.findall(
+        r'([0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[1-2][0-9]|3[0-1]) (?:2[0-3]|[01][0-9]):[0-5][0-9]:[0-6][0-9])(?: \['
+        r'System\] \[\] )(?:.*gained )(\d.*.\d\d\d\d)(?: .*your )(.*)(?: skill)',
+        data)
 
-for skillGain in skillGains:
-    print(skillGain)
+    for skillGain in skillGains:
+        date = skillGain[0]
+        skill = skillGain[2]
+        points = skillGain[1]
 
-# Item Tier:
-sampleData = '2019-12-18 04:23:19 [System] [] Your MarCorp Kallous-7 has reached tier 9.60'
-itemTiers = re.findall(
-    r'([0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[1-2][0-9]|3[0-1]) (?:2[0-3]|[01][0-9]):[0-5][0-9]:[0-6][0-9])(?: \['
-    r'System\] \[\] )(?:.*Your )(.*)(?:has reached tier )(\d+.\d+)',
-    sampleData)
+    return date, skill, points
 
-for itemTier in itemTiers:
-    print(itemTier)
+# Item Tier Increases:
+def getTierIncreases(data):
+    tierIncreases = re.findall(
+        r'([0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[1-2][0-9]|3[0-1]) (?:2[0-3]|[01][0-9]):[0-5][0-9]:[0-6][0-9])(?: \['
+        r'System\] \[\] )(?:.*Your )(.*)(?: has reached tier )(\d+.\d+)',
+        data)
+
+    for tierIncrease in tierIncreases:
+        date = tierIncrease[0]
+        item = tierIncrease[1]
+        tier = tierIncrease[2]
+
+    return date, item, tier
+
+# Skill Gain function parse
+data = '2019-06-08 22:38:31 [System] [] You have gained 1.1731 experience in your Scourging skill'
+skillGains = getSkillGains(data)
+print(skillGains[0] + "," + skillGains[1] + "," + skillGains[2])
+
+# Tier Increase function parse
+data = '2019-12-18 04:23:19 [System] [] Your MarCorp Kallous-7 has reached tier 9.60'
+tierIncreases = getTierIncreases(data)
+print(tierIncreases[0] + "," + tierIncreases[1] + "," + tierIncreases[2])
 
 # Heal:
 sampleData = '2019-06-08 22:38:23 [System] [] You healed yourself 30.0 points'
