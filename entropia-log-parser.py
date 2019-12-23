@@ -53,6 +53,54 @@ def get_self_heals(data):
     return date, points
 
 
+# Damage Inflicted
+def get_dmg_inflicted(data):
+    date = None
+    points = None
+    dmg_inflicted = re.findall(r'([0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[1-2][0-9]|3[0-1]) (?:2[0-3]|[01][0-9]):[0-5]['
+                               r'0-9]:[0-6][0-9])(?: \[System\] \[\] )(?:.*?)(?:You inflicted )(\d+.\d+)(?: points of '
+                               r'damage)', data)
+
+    for dmg in dmg_inflicted:
+        date = dmg[0]
+        points = dmg[1]
+
+    return date, points
+
+
+# Damage taken:
+def get_dmg_taken(data):
+    date = None
+    points = None
+    dmg_taken = re.findall(r'([0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[1-2][0-9]|3[0-1]) (?:2[0-3]|[01][0-9]):[0-5][0-9]:['
+                           r'0-6][0-9])(?: \[System\] \[\] )(?:.*?)(?:You took )(\d+.\d+)(?: points of damage)', data)
+
+    for dmg in dmg_taken:
+        date = dmg[0]
+        points = dmg[1]
+
+    return date, points
+
+
+# Globals:
+def get_player_globals(player, data):
+    date = None
+    creature = None
+    amount = None
+    player_globals = re.findall(r'([0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[1-2][0-9]|3[0-1]) (?:2[0-3]|[01][0-9]):['
+                                r'0-5][0-9]:[0-6][0-9])(?: \[Globals\] \[\] )(?:' + player + ' )(?:killed a creature '
+                                r')\((.*?)\)(?:.* with a value of )(\d+)(?: PED!)', data)
+    for my_global in player_globals:
+        date = my_global[0]
+        creature = my_global[1]
+        amount = my_global[2]
+
+    return date, creature, amount
+
+
+# Define Player Name
+avatar = "Overcooked OC Panda"
+
 # Skill Gain function parse
 log = '2019-06-08 22:38:31 [System] [] You have gained 1.1731 experience in your Scourging skill'
 skillGains = get_skill_gains(log)
@@ -69,37 +117,19 @@ selfHeals = get_self_heals(log)
 print(selfHeals[0] + "," + selfHeals[1])
 
 # Damage inflicted:
-sampleData = '2019-06-08 22:38:56 [System] [] Critical hit - Additional damage! You inflicted 235.1 points of damage'
-dmgInflicted = re.findall(r'([0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[1-2][0-9]|3[0-1]) (?:2[0-3]|[01][0-9]):[0-5]['
-                          r'0-9]:[0-6][0-9])(?: \[System\] \[\] )(?:.*?)(?:You inflicted )(\d+.\d+)(?: points of '
-                          r'damage)', sampleData)
-
-for dmg in dmgInflicted:
-    print(dmg)
+log = '2019-06-08 22:38:56 [System] [] Critical hit - Additional damage! You inflicted 235.1 points of damage'
+dmgInflicted = get_dmg_inflicted(log)
+print(dmgInflicted[0] + "," + dmgInflicted[1])
 
 # Damage taken:
-sampleData = '2019-06-08 22:39:04 [System] [] You took 40.5 points of damage'
-dmgTaken = re.findall(r'([0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[1-2][0-9]|3[0-1]) (?:2[0-3]|[01][0-9]):[0-5][0-9]:['
-                      r'0-6][0-9])(?: \[System\] \[\] )(?:.*?)(?:You took )(\d+.\d+)(?: points of damage)', sampleData)
-
-for dmg in dmgTaken:
-    print(dmg)
+log = '2019-06-08 22:39:04 [System] [] You took 40.5 points of damage'
+dmgTaken = get_dmg_taken(log)
+print(dmgTaken[0] + "," + dmgTaken[1])
 
 # Globals:
-sampleData = '2019-12-08 03:20:33 [Globals] [] Overcooked OC Panda killed a creature (Calamusoid Hunter) with a value '\
-             'of 515 PED! A record has been added to the Hall of Fame! '
-playerGlobals = re.findall(r'([0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[1-2][0-9]|3[0-1]) (?:2[0-3]|[01][0-9]):[0-5]['
-                           r'0-9]:[0-6][0-9])(?: \[Globals\] \[\] )(?:Overcooked OC Panda )(?:killed a creature )\(('
-                           r'.*?)\)(?:.* with a value of )(\d+)(?: PED!)', sampleData)
+log = '2019-12-08 03:20:33 [Globals] [] Overcooked OC Panda killed a creature (Calamusoid Hunter) with a value ' \
+      'of 515 PED! A record has been added to the Hall of Fame! '
 
-for myGlobal in playerGlobals:
-    print(myGlobal)
-
-sampleData = '2019-12-18 04:46:30 [System] [] Your MarCorp Kallous-7 is close to reaching minimum condition, ' \
-             'consider repairing it as soon as possible '
-repairNeeded = re.findall(r'([0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[1-2][0-9]|3[0-1]) (?:2[0-3]|[01][0-9]):[0-5]['
-                          r'0-9]:[0-6][0-9])(?: \[System\] \[\] )(?:.*Your )(.*)(?: is close to reaching minimum '
-                          r'condition, consider repairing it as soon as possible)', sampleData)
-
-for repair in repairNeeded:
-    print(repair)
+# Define Player Name
+my_globals = get_player_globals(avatar, log)
+print(my_globals[0] + "," + my_globals[1] + "," + my_globals[2])
