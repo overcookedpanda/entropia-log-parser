@@ -2,6 +2,23 @@
 import re
 
 
+# Attributes:
+def get_attribute_gains(data):
+    date = None
+    attribute = None
+    points = None
+    attribute_gains = re.findall(r'([0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[1-2][0-9]|3[0-1]) (?:2[0-3]|[01][0-9]):['
+                                 r'0-5][0-9]:[0-6][0-9])(?: \[System\] \[\] )(?:.*gained )(\d.*.\d\d\d\d)\s(\w+)$',
+                                 data)
+
+    for attribute_gain in attribute_gains:
+        date = attribute_gain[0]
+        attribute = attribute_gain[2]
+        points = attribute_gain[1]
+
+    return date, attribute, points
+
+
 # Skill Gains:
 def get_skill_gains(data):
     date = None
@@ -100,6 +117,12 @@ def get_player_globals(player, data):
 
 # Define Player Name
 avatar = "Overcooked OC Panda"
+
+# Attribute Gain function parse
+log = '2019-12-23 02:04:59 [System] [] You have gained 0.0134 experience in your Anatomy skill' \
+      '2019-12-23 02:05:04 [System] [] You have gained 0.2376 Alertness'
+attributeGains = get_attribute_gains(log)
+print(attributeGains[0] + ',' + attributeGains[1] + ',' + attributeGains[2])
 
 # Skill Gain function parse
 log = '2019-06-08 22:38:31 [System] [] You have gained 1.1731 experience in your Scourging skill'
