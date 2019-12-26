@@ -26,7 +26,7 @@ def main():
                 f.write(skillGains[0] + "," + skillGains[1] + "," + skillGains[2] + '\n')
                 f.close()
             if attributeGains != (None, None, None):
-                f = open("./parsed_logs/attribute_gains.csv", "a+")
+                f = open("./parsed_logs/skill_gains.csv", "a+")
                 f.write(attributeGains[0] + ',' + attributeGains[1] + ',' + attributeGains[2] + '\n')
                 f.close()
             if tierIncreases != (None, None, None):
