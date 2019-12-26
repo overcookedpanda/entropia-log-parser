@@ -61,7 +61,7 @@ def get_attribute_gains(data):
     attribute = None
     points = None
     attribute_gains = re.findall(r'([0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[1-2][0-9]|3[0-1]) (?:2[0-3]|[01][0-9]):['
-                                 r'0-5][0-9]:[0-6][0-9])(?: \[System\] \[\] )(?:.*gained )(\d.*.\d\d\d\d)\s(\w+)$',
+                                 r'0-5][0-9]:[0-6][0-9])(?: \[System\] \[\] )(?:.*gained )(\d.*.\d{0,4})\s(\w+)$',
                                  data)
 
     for attribute_gain in attribute_gains:
@@ -79,7 +79,7 @@ def get_skill_gains(data):
     points = None
     skill_gains = re.findall(
         r'([0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[1-2][0-9]|3[0-1]) (?:2[0-3]|[01][0-9]):[0-5][0-9]:[0-6][0-9])(?: \['
-        r'System\] \[\] )(?:.*gained )(\d.*.\d\d\d\d)(?: .*your )(.*)(?: skill)',
+        r'System\] \[\] )(?:.*gained )(\d.*.\d{0,4})(?: .*your )(.*)(?: skill)',
         data)
 
     for skill_gain in skill_gains:
