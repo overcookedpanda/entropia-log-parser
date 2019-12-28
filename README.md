@@ -1,7 +1,7 @@
 Simple script to parse Entropia Universe chat.log for various statistics using regex.
 
 Configurable options:
-
+```python
 # Define Player Variables
 player = "Overcooked OC Panda"
 # MarCorp Kallous 7 + Omegaton A105 Improved + Weapon Damage Enhancers 1-9
@@ -22,12 +22,12 @@ healCost = 159.22
 healDecay = 0
 # Other Costs, pills, etc, user specified in PED, for items used during hunt.
 otherCosts = 0
-
+```
 
 Currently you run it with ./entropia-log-parser.py chat.log and it will output .csv files into ./parsed_logs which can then be further processed.
 
 Example Output:
-
+```
 Processed 51972 lines...
 Total Damage Taken: 14106.60 Armor Hit Points
 Total Damage Cost: 7.04 PED
@@ -53,4 +53,4 @@ UL Tier Increases During Run:
 ---
 Total Global Loot: 2007.0 PED
 Total Skills Gained: 1146.84
-
+```
