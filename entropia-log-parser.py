@@ -11,7 +11,7 @@ def main():
         print("File path {} does not exist. Exiting...".format(filepath))
         sys.exit()
 
-    with open(filepath) as fp:
+    with open(filepath, encoding="utf-8") as fp:
         counter = 0
         shots = 0
         hits = 0
