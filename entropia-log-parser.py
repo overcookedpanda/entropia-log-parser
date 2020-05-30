@@ -217,7 +217,7 @@ def get_player_globals(player, data):
     amount = None
     player_globals = re.findall(r'([0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[1-2][0-9]|3[0-1]) (?:2[0-3]|[01][0-9]):['
                                 r'0-5][0-9]:[0-6][0-9])(?: \[Globals\] \[\] )(?:' + player + ' )(?:killed a creature '
-                                r')\((.*?)\)(?:.* with a value of )(\d+)(?: PED!)', data)
+                                r')\((.*?)\)(?:.* with a value of )(\d+)(?: PED)', data)
     for my_global in player_globals:
         date = my_global[0]
         creature = my_global[1]

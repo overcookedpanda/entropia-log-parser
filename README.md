@@ -1,3 +1,5 @@
+Working on adding OCR for Loot Recognition :)
+
 Simple script to parse Entropia Universe chat.log for various statistics using regex.
 
 Configurable options:
