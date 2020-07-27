@@ -29,7 +29,6 @@ def index():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-#            process_file(os.path.join(app.config['UPLOAD_FOLDER'], filename), filename)
             player = request.form.get('player', '')
             weaponCost = float(request.form.get('weaponCost', '0'))
             weaponDecay = float(request.form.get('weaponDecay', '0'))
@@ -41,16 +40,20 @@ def index():
             healCost = float(request.form.get('healCost', '0'))
             healDecay = int(request.form.get('healDecay', '0'))
             otherCosts = int(request.form.get('otherCosts', '0'))
-            text = Markup("Player Defined Parameters:<br> Player Name: {}<br>Weapon Cost: {}<br>Weapon Decay: {}<br>Weapon MarkUp: {}<br>Enhancer Cost: {}<br> \
+            text = Markup("<h5>Player Defined Parameters:</h5><br> Player Name: {}<br>Weapon Cost: {}<br>Weapon Decay: {}<br>Weapon MarkUp: {}<br>Enhancer Cost: {}<br> \
                  Enhancer MarkUp: {}<br>Armor Cost: {}<br>Armor MarkUp: {}<br>Heal Cost: {}<br>Heal Decay: {}<br> \
                  Other Costs: {}".format(player, weaponCost, weaponDecay, weaponMarkUp, enhancerCost, enhancerMarkUp, armorCost, \
                  armorMarkUp, healCost, healDecay, otherCosts))
             stats = process_stats(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return '{} {}'.format(text, stats)
+            html_top = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> \
+                        <head><title>Entropia Log Parser</title><link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> \
+                        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head> \
+                        <body><div class="container"><br><center><h2>Entropia Log Parser</h2></center></div><div class="container"><br><div class="row align-items-center justify-content-center"><div class="col-sm-6">'
+            html_middle = '</div><div class="col-sm-6">'
+            html_bottom = '</div></div></body></html>'
+            return '{} {} {} {} </div> {}'.format(html_top, text, html_middle, stats, html_bottom)
     return render_template('index.html')
 
-
-#def process_file(path, filename):
 
 def process_stats(path):
     player = request.form.get('player', '')
@@ -96,7 +99,7 @@ def process_stats(path):
                 totalSkills += float(attributeGains[2])
             if tierIncreases != (None, None, None):
                 #  Do not track tier increases on (L) items.
-                if not re.search(r'\(M,L\)|\(L\)', tierIncreases[1]):
+                if not re.search(r'\(F,L\)|\(M,L\)|\(L\)', tierIncreases[1]):
                     totalTierIncreases.append(tierIncreases)
             if selfHeals != (None, None, None):
                 totalHeals += float(selfHeals[2])
@@ -141,8 +144,10 @@ def process_stats(path):
                     ---<br> \
                     Total Global Loot: {} PED<br> \
                     Total Skills Gained: {}".format(str(counter), format(totalDmgTaken, '.2f'), format(totalDmgCost, '.2f'), format(totalHeals, '.2f'), format((totalHeals / healCost) * 0.01, '.2f'), str(totalBrokenEnhancers), format(totalEnhancerCost, '.2f'), str(shots), format(totalDmgInflicted, '.2f'), format(totalWeaponCost, '.2f'), str(otherCosts), format(totalPedCycled, '.2f'), format(totalDmgInflicted / (totalPedCycled * 100), '.2f'), str(totalGlobals), format(totalSkills, '.2f')) \
-                    + "<br>---<br>Total UL Tier Increases During Run:<br>" + ttIncrease\
+                    + "<br>---<br>Total UL Tier Increases During Run:<br>" + ttIncrease + "<br>" \
+                    + "Uploaded file removed: " + os.path.basename(filepath)
                    )
+    os.remove(filepath)
     return stats
 
 # Attributes:

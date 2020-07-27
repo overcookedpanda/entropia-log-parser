@@ -1,29 +1,41 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
   <head>
-    <title>Test</title>
+    <title>Entropia Log Parser</title>
+     <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
 
   <body>
-<form action = "http://localhost:5000/" method = "POST" enctype = "multipart/form-data">
-    <input type="file" name="file" />
-<hr>
-    <input type="text" class="form-control" placeholder="Full Player Name" name="player"></input><br>
-    <input type="text" class="form-control" placeholder="Weapon Cost" name="weaponCost"></input><br>
-    <input type="text" class="form-control" placeholder="Weapon Decay" name="weaponDecay"></input><br>
-    <input type="text" class="form-control" placeholder="Weapon MarkUp" name="weaponMarkUp"></input><br>
-    <input type="text" class="form-control" placeholder="Enhancer Cost" name="enhancerCost"></input><br>
-    <input type="text" class="form-control" placeholder="Enhancer MarkUp" name="enhancerMarkUp"></input><br>
-    <input type="text" class="form-control" placeholder="Armor Cost" name="armorCost"></input><br>
-    <input type="text" class="form-control" placeholder="Armor MarkUp" name="armorMarkUp"></input><br>
-    <input type="text" class="form-control" placeholder="Heal Cost" name="healCost"></input><br>
-    <input type="text" class="form-control" placeholder="Heal Decay" name="healDecay"></input><br>
-    <input type="text" class="form-control" placeholder="Other Misc Costs (Pills, etc)" name="otherCosts"></input><br>
-    <input type="submit" value="Submit"/>
-</form>
-<p>
-{{ stats }}
-<hr>
-{{ text }}
+  <div class="container"><br>
+    <center>
+      <h2>Entropia Log Parser</h2>
+    </center>
+  </div>
+  
+  <div class="container"><br>
+  <div class="row align-items-center justify-content-center">
+  <div class="col-md-4">
+    <form action = "" method = "POST" enctype = "multipart/form-data">
+      <div class="form-group">
+      <input type="file" name="file" />
+      <hr>
+      <input type="text" class="form-control" placeholder="Full Player Name" name="player"></input><br>
+      <input type="text" class="form-control" placeholder="Weapon Cost" name="weaponCost"></input><br>
+      <input type="text" class="form-control" placeholder="Weapon Decay" name="weaponDecay"></input><br>
+      <input type="text" class="form-control" placeholder="Weapon MarkUp" name="weaponMarkUp"></input><br>
+      <input type="text" class="form-control" placeholder="Enhancer Cost" name="enhancerCost"></input><br>
+      <input type="text" class="form-control" placeholder="Enhancer MarkUp" name="enhancerMarkUp"></input><br>
+      <input type="text" class="form-control" placeholder="Armor Cost" name="armorCost"></input><br>
+      <input type="text" class="form-control" placeholder="Armor MarkUp" name="armorMarkUp"></input><br>
+      <input type="text" class="form-control" placeholder="Heal Cost" name="healCost"></input><br>
+      <input type="text" class="form-control" placeholder="Heal Decay" name="healDecay"></input><br>
+      <input type="text" class="form-control" placeholder="Other Misc Costs (Pills, etc)" name="otherCosts"></input><br>
+      <button type="submit" value="Submit" class="btn btn-success">Submit</button>
+      </div>
+    </form>
+    </div>
+    </div>
   </body>
 </html>
