@@ -3,7 +3,7 @@ import re
 import sys
 import os
 from flask import Flask, request, render_template, Markup, redirect, url_for
-from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + '/uploads/'
 ALLOWED_EXTENSIONS = {'log'}
@@ -11,7 +11,7 @@ ALLOWED_EXTENSIONS = {'log'}
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # limit upload size to 8MB
-app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 15 * 1024 * 1024
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -317,5 +317,5 @@ def get_broken_enhancers(data):
 #    main()
 
 if __name__ == '__main__':
-    app.run(host = '127.0.0.1', debug = False)
+    app.run(host = '127.0.0.1', port = 80, debug = False)
 
