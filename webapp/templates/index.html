@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+  <head>
+    <title>Test</title>
+  </head>
+
+  <body>
+<form action = "http://localhost:5000/" method = "POST" enctype = "multipart/form-data">
+    <input type="file" name="file" />
+<hr>
+    <input type="text" class="form-control" placeholder="Full Player Name" name="player"></input><br>
+    <input type="text" class="form-control" placeholder="Weapon Cost" name="weaponCost"></input><br>
+    <input type="text" class="form-control" placeholder="Weapon Decay" name="weaponDecay"></input><br>
+    <input type="text" class="form-control" placeholder="Weapon MarkUp" name="weaponMarkUp"></input><br>
+    <input type="text" class="form-control" placeholder="Enhancer Cost" name="enhancerCost"></input><br>
+    <input type="text" class="form-control" placeholder="Enhancer MarkUp" name="enhancerMarkUp"></input><br>
+    <input type="text" class="form-control" placeholder="Armor Cost" name="armorCost"></input><br>
+    <input type="text" class="form-control" placeholder="Armor MarkUp" name="armorMarkUp"></input><br>
+    <input type="text" class="form-control" placeholder="Heal Cost" name="healCost"></input><br>
+    <input type="text" class="form-control" placeholder="Heal Decay" name="healDecay"></input><br>
+    <input type="text" class="form-control" placeholder="Other Misc Costs (Pills, etc)" name="otherCosts"></input><br>
+    <input type="submit" value="Submit"/>
+</form>
+<p>
+{{ stats }}
+<hr>
+{{ text }}
+  </body>
+</html>
