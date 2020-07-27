@@ -40,10 +40,19 @@ def index():
             healCost = float(request.form.get('healCost', '0'))
             healDecay = int(request.form.get('healDecay', '0'))
             otherCosts = int(request.form.get('otherCosts', '0'))
-            text = Markup("<h5>Player Defined Parameters:</h5><br> Player Name: {}<br>Weapon Cost: {}<br>Weapon Decay: {}<br>Weapon MarkUp: {}<br>Enhancer Cost: {}<br> \
-                 Enhancer MarkUp: {}<br>Armor Cost: {}<br>Armor MarkUp: {}<br>Heal Cost: {}<br>Heal Decay: {}<br> \
-                 Other Costs: {}".format(player, weaponCost, weaponDecay, weaponMarkUp, enhancerCost, enhancerMarkUp, armorCost, \
-                 armorMarkUp, healCost, healDecay, otherCosts))
+            text = Markup('<h5>Player Defined Parameters:</h5><br> \
+                           <div class="row"><div class="col-sm-4">Player Name:</div><div class="col-sm-6">{}</div></div> \
+                           <div class="row"><div class="col-sm-4">Weapon Cost:</div><div class="col-sm-6">{}</div></div> \
+                           <div class="row"><div class="col-sm-4">Weapon Decay:</div><div class="col-sm-6">{}</div></div> \
+                           <div class="row"><div class="col-sm-4">Weapon MarkUp:</div><div class="col-sm-6">{}</div></div> \
+                           <div class="row"><div class="col-sm-4">Enhancer Cost:</div><div class="col-sm-6">{}</div></div> \
+                           <div class="row"><div class="col-sm-4">Enhancer MarkUp:</div><div class="col-sm-6">{}</div></div> \
+                           <div class="row"><div class="col-sm-4">Armor Cost:</div><div class="col-sm-6">{}</div></div> \
+                           <div class="row"><div class="col-sm-4">Armor MarkUp:</div><div class="col-sm-6">{}</div></div> \
+                           <div class="row"><div class="col-sm-4">Heal Cost:</div><div class="col-sm-6">{}</div></div> \
+                           <div class="row"><div class="col-sm-4">Heal Decay:</div><div class="col-sm-6">{}</div></div> \
+                           <div class="row"><div class="col-sm-4">Other Costs:</div><div class="col-sm-6">{}</div></div>'.format(player, weaponCost, weaponDecay, weaponMarkUp, enhancerCost, enhancerMarkUp, armorCost, \
+                           armorMarkUp, healCost, healDecay, otherCosts))
             stats = process_stats(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             html_top = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> \
                         <head><title>Entropia Log Parser</title><link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> \
@@ -123,29 +132,24 @@ def process_stats(path):
     totalPedCycled = float(totalDmgCost + totalHealCost + totalWeaponCost + otherCosts)
     ttIncrease = ''
     for tier in totalTierIncreases:
-        ttIncrease += tier[0] + " :: " + tier[1] + " - " + tier[2] + "<br>"
-    stats = Markup("<p>Processed {} lines...<br> \
-                    Total Damage Taken: {} Armor Hit Points<br> \
-                    Total Damage Cost: {} PED<br> \
-                    ---<br> \
-                    Total Heals: {} Health Points<br> \
-                    Total Heal Cost: {} PED<br> \
-                    ---<br> \
-                    Total Broken Enhancers: {}<br> \
-                    Total Broken Enhancer NET Cost: {} PED<br> \
-                    ---<br> \
-                    Total Shots Taken: {}<br> \
-                    Total Damage Inflicted: {} Mob Hit Points<br> \
-                    Total Weapon Cost: {} PED<br> \
-                    Other User Specified Costs: {} PED<br> \
-                    ---<br> \
-                    Total Cycled: {} PED<br> \
-                    Average Eco: {} DPP<br> \
-                    ---<br> \
-                    Total Global Loot: {} PED<br> \
-                    Total Skills Gained: {}".format(str(counter), format(totalDmgTaken, '.2f'), format(totalDmgCost, '.2f'), format(totalHeals, '.2f'), format((totalHeals / healCost) * 0.01, '.2f'), str(totalBrokenEnhancers), format(totalEnhancerCost, '.2f'), str(shots), format(totalDmgInflicted, '.2f'), format(totalWeaponCost, '.2f'), str(otherCosts), format(totalPedCycled, '.2f'), format(totalDmgInflicted / (totalPedCycled * 100), '.2f'), str(totalGlobals), format(totalSkills, '.2f')) \
-                    + "<br>---<br>Total UL Tier Increases During Run:<br>" + ttIncrease + "<br>" \
-                    + "Uploaded file removed: " + os.path.basename(filepath)
+        ttIncrease += '<div class="row"><div class="col-sm-6">' + tier[0] + '</div><div class="col-sm-6">' + tier[1] + " - " + tier[2] + "</div></div>"
+    stats = Markup('<h5>Processed {} lines...</h5> \
+                    <div class="row"><div class="col-sm-6">Total Damage Taken</div><div class="col-sm-6">{} Armor Hit Points</div></div> \
+                    <div class="row"><div class="col-sm-6">Total Damage Cost</div><div class="col-sm-6">{} PED</div></div> \
+                    <div class="row"><div class="col-sm-6">Total Heals</div><div class="col-sm-6">{} Health Points</div></div> \
+                    <div class="row"><div class="col-sm-6">Total Heal Cost</div><div class="col-sm-6">{} PED</div></div> \
+                    <div class="row"><div class="col-sm-6">Total Broken Enhancers</div><div class="col-sm-6">{}</div></div> \
+                    <div class="row"><div class="col-sm-6">Total Broken Enhancer NET Cost</div><div class="col-sm-6">{} PED</div></div> \
+                    <div class="row"><div class="col-sm-6">Total Shots Taken</div><div class="col-sm-6">{}</div></div> \
+                    <div class="row"><div class="col-sm-6">Total Damage Inflicted</div><div class="col-sm-6">{} Mob Hit Points</div></div> \
+                    <div class="row"><div class="col-sm-6">Total Weapon Cost</div><div class="col-sm-6">{} PED</div></div> \
+                    <div class="row"><div class="col-sm-6">Other User Specified Costs</div><div class="col-sm-6">{} PED</div></div> \
+                    <div class="row"><div class="col-sm-6">Total Cycled</div><div class="col-sm-6">{} PED</div></div> \
+                    <div class="row"><div class="col-sm-6">Average Eco</div><div class="col-sm-6">{} DPP</div></div> \
+                    <div class="row"><div class="col-sm-6">Total Global Loot</div><div class="col-sm-6">{} PED</div></div> \
+                    <div class="row"><div class="col-sm-6">Total Skills Gained</div><div class="col-sm-6">{} Points</div></div><p>'.format(str(counter), format(totalDmgTaken, '.2f'), format(totalDmgCost, '.2f'), format(totalHeals, '.2f'), format((totalHeals / healCost) * 0.01, '.2f'), str(totalBrokenEnhancers), format(totalEnhancerCost, '.2f'), str(shots), format(totalDmgInflicted, '.2f'), format(totalWeaponCost, '.2f'), str(otherCosts), format(totalPedCycled, '.2f'), format(totalDmgInflicted / (totalPedCycled * 100), '.2f'), str(totalGlobals), format(totalSkills, '.2f')) \
+                    + '<div class="row"><div class="col-sm-6">Total UL Tier Increases During Run:</div></div>' + ttIncrease \
+                    + '<p><div class="row"><div class="col-sm-6">Uploaded file removed:</div><div class="col-sm-6">' + os.path.basename(filepath) + '</div></div>'
                    )
     os.remove(filepath)
     return stats
