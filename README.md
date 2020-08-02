@@ -1,4 +1,4 @@
-Working on adding OCR for Loot Recognition :)
+I turned the script into a simple web app for those that do not want to run python. Visit https://overcookedpanda.com to try it out :)
 
 Simple script to parse Entropia Universe chat.log for various statistics using regex.
 
